@@ -17,3 +17,9 @@ jobs:
       run: docker build -t kadeguilherme/my-app:latest -f argocd-cicd-setup/Dockerfile .
     - name: Push Docker
       run: docker push kadeguilherme/my-app
+    - name: Login to GitHub Packages
+      uses: actions/checkout@v3
+      with:
+        repository: kadeguilherme/argocd-setup
+        ref: 'main'
+        token: ${{ secrets.G_TOKEN }}
