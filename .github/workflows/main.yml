@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Log in to Docker Hub
-      run: docker login -u $DOCKER_USERNAME -p DOCKER_PASSWORD
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build
       run: docker build -f argocd-cicd-setup/Dockerfile . --tag kadeguilherme/my-app:latest
     - name: Push Docker
