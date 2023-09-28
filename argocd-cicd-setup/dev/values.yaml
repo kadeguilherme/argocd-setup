@@ -1,9 +1,0 @@
-nginx:
-  deployment:
-    name: nginx
-    image: nginx
-    replicas: 3
-  service: 
-    name: nginx
-    port: 80
-    nodePort: 30001
