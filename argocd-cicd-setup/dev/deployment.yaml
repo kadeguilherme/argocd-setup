@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.nginx.deployment.name  }}-deploy"
+  labels:
+    name: "{{ .Values.nginx.deployment.name  }}-deploy"
+    app: "{{ .Values.nginx.deployment.name  }}-app"
+spec:
+  replicas: {{ .Values.nginx.deployment.replicas  }}
+  selector:
+    matchLabels:
+      name: "{{ .Values.nginx.deployment.name  }}-pod"
+      app: "{{ .Values.nginx.deployment.name  }}-app"
+  template:
+    metadata:
+      name: "{{ .Values.nginx.deployment.name  }}-pod"
+      labels:
+        name: "{{ .Values.nginx.deployment.name  }}-pod"
+        app: "{{ .Values.nginx.deployment.name  }}-app"
+    spec:
+      containers:
+      - name: "{{ .Values.nginx.deployment.name  }}"
+        image: {{ .Values.nginx.deployment.image  }}
+        ports:
+          - containerPort: {{ .Values.nginx.service.port  }}
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.nginx.deployment.name  }}-service"
+  labels:
+    name: "{{ .Values.nginx.deployment.name  }}-service"
+    app: "{{ .Values.nginx.deployment.name  }}-app"
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.nginx.service.port  }}
+      targetPort: {{ .Values.nginx.service.port  }}
+      nodePort: {{ .Values.nginx.service.nodePort  }}
+  selector:
+    name: "{{ .Values.nginx.deployment.name  }}-pod"
+    app: "{{ .Values.nginx.deployment.name  }}-app"
